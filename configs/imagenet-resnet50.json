@@ -1,0 +1,67 @@
+{
+  "name": "imagenet-resnet50",
+  "dataset": {
+    "name": "imagenet",
+    "prior_fraction": 0.5,
+    "number_classes": 1000
+  },
+  "encoder": {
+    "name": "resnet50",
+    "feature_dimension": 2048,
+    "width": 1,
+    "dropout": 0.0
+  },
+  "prior": {
+    "source": "a_trained",
+    "optimizer": "sgd",
+    "epochs": 90,
+    "batch_size": 256,
+    "learning_rate": 0.1,
+    "weight_decay": 0.0001,
+    "momentum": 0.9,
+    "warmup_epochs": 0,
+    "calibration_fraction": 0.0,
+    "label_smoothing": 0.0,
+    "augmentation": "imagenet",
+    "cutout_size": 0,
+    "schedule": "step",
+    "lr_milestones": [30, 60],
+    "lr_gamma": 0.1
+  },
+  "feature_map": {
+    "kind": "pca_whiten_bias",
+    "rank": 129,
+    "kappa": 0.5
+  },
+  "posterior": {
+    "steps": 3000,
+    "checkpoint_every": 100,
+    "batch_size": 512,
+    "learning_rates": [0.00003],
+    "objectives": ["exact"],
+    "warmup_steps": 0,
+    "training_quadrature_order": 16,
+    "selection_quadrature_order": 32,
+    "selection_chunk_size": 64,
+    "selection_examples": 16384,
+    "gradient_clip_norm": 10.0
+  },
+  "confidence": {
+    "total_failure_probability": 0.05,
+    "pac_bayes_delta_each": 0.045,
+    "pac_bayes_family_count": 1,
+    "monte_carlo_delta": 0.005,
+    "direct_holdout_delta": 0.05
+  },
+  "certification": {
+    "monte_carlo_trials": 5000000,
+    "monte_carlo_chunk_size": 10000,
+    "diagnostic_quadrature_order": 32,
+    "evaluate_test": true,
+    "direct_holdout": true
+  },
+  "numerics": {
+    "minimum_posterior_std": 0.0001,
+    "minimum_relative_singular_value": 1e-10
+  }
+}

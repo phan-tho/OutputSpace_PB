@@ -1,0 +1,64 @@
+{
+  "name": "cifar10-wrn28-4",
+  "dataset": {
+    "name": "cifar10",
+    "prior_fraction": 0.5,
+    "number_classes": 10
+  },
+  "encoder": {
+    "name": "wrn28_4",
+    "feature_dimension": 128,
+    "width": 4,
+    "dropout": 0.0
+  },
+  "prior": {
+    "source": "a_trained",
+    "optimizer": "sgd",
+    "epochs": 200,
+    "batch_size": 256,
+    "learning_rate": 0.1,
+    "weight_decay": 0.0005,
+    "momentum": 0.9,
+    "warmup_epochs": 5,
+    "calibration_fraction": 0.05,
+    "label_smoothing": 0.0,
+    "augmentation": "cifar",
+    "cutout_size": 16,
+    "validation_every": 5
+  },
+  "feature_map": {
+    "kind": "standardize",
+    "rank": 128,
+    "kappa": 0.5
+  },
+  "posterior": {
+    "steps": 2000,
+    "checkpoint_every": 100,
+    "batch_size": 1024,
+    "learning_rates": [0.0006],
+    "objectives": ["exact"],
+    "warmup_steps": 0,
+    "training_quadrature_order": 128,
+    "selection_quadrature_order": 256,
+    "selection_chunk_size": 256,
+    "gradient_clip_norm": 10.0
+  },
+  "confidence": {
+    "total_failure_probability": 0.05,
+    "pac_bayes_delta_each": 0.045,
+    "pac_bayes_family_count": 1,
+    "monte_carlo_delta": 0.005,
+    "direct_holdout_delta": 0.05
+  },
+  "certification": {
+    "monte_carlo_trials": 5000000,
+    "monte_carlo_chunk_size": 20000,
+    "diagnostic_quadrature_order": 256,
+    "evaluate_test": true,
+    "direct_holdout": true
+  },
+  "numerics": {
+    "minimum_posterior_std": 0.0001,
+    "minimum_relative_singular_value": 1e-10
+  }
+}

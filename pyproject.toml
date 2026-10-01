@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "output-space-pb"
+version = "0.1.0"
+description = "Symmetric independent-score output-space PAC-Bayes experiments"
+requires-python = ">=3.10"
+dependencies = [
+  "scipy>=1.11",
+  "torch>=2.1",
+  "torchvision>=0.16",
+]
+
+[tool.setuptools]
+py-modules = ["data", "models", "pac_bayes", "utils"]
